@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import Card from "./Card.jsx";
+import BlankCard from "./BlankCard.jsx"
 
 export default function Container() {
     const [images, setImages] = useState([]);
     const [randomImages, setRandomImages] = useState([]);
     const [startButtonVisible, setStartButtonVisible] = useState(true)
+    const [bestScore, setBestScore] = useState(0)
     const [currentScore, setCurrentScore] = useState(0)
     const [clickedImages, setClickedImages] = useState([])
+    const [text, setText] = useState(["Test your memory! All you have to do is click a different picture 21 times in a row. Good luck."])
+    const [blankCards, setBlankCards] = useState(true)
 
 
     useEffect(() => {
@@ -36,28 +40,61 @@ export default function Container() {
     };
 
     function handleClick(index) {
+        
         console.log(index);
         if (clickedImages.includes(index)) {
-            console.log("game over")
+                setText("Try again.")
+                resetGame()
         } else {
+            if (clickedImages.length === 20) {
+                setText("WOW, good job. YOU WON THE GAME!")
+                resetGame()
+                
+            } else {
             setRandomImages(shuffle([...images]));
             setCurrentScore(c => c + 1)
+            if (bestScore < (currentScore + 1)) {
+                setBestScore(b => b + 1)
+            }
             setClickedImages(ci => [...ci, index])
         }
+        }
     }
-
+    function resetGame() {
+        setClickedImages([])
+        setCurrentScore(0)
+        
+    }
+    
     function setupStart() {
         setRandomImages(images)
         setStartButtonVisible(false)
+        setBlankCards(false)
     }
+    const blankArray = new Array(21).fill(null);
 
     return (
         <>
-        <p>`Current score: {currentScore}`</p>
+        <div className="setup-container">
+            <div>
+            <p>{text}</p>
+                {startButtonVisible && (
+                    <button onClick={setupStart} className="start-button">Start the game</button>
+                )}
+            </div>
+            <div>
+                <p>Current score: {currentScore}</p>
+                <p>Best score: {bestScore}</p>
+            </div>
+            
+        </div>
+        
             <div className="card-container">
-            {startButtonVisible && (
-                <button onClick={setupStart} className="start-button">Start the game</button>
-            )}
+            {blankCards && (
+                    blankArray.map((_, index) => (
+                        <BlankCard key={index} />
+                    ))
+                )}
                 {randomImages.map(({ id, urls }) => (
                     <Card key={id} imgUrl={urls.small} id={id} onClick={handleClick} />
                 ))}

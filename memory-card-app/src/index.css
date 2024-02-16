@@ -1,9 +1,11 @@
 body {
-  background-color: #d19a81;
+  background-color: #141613;
+  font-family: monospace;
+  color: white;
 }
 .card-container {
-  background: rgb(76,159,184);
-  background: radial-gradient(circle, rgba(76,159,184,1) 0%, rgba(129,190,209,1) 100%);
+  
+  background: radial-gradient(circle, rgb(31, 93, 111) 0%, rgb(148, 196, 211) 100%);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -11,6 +13,7 @@ body {
   gap: 20px;
   padding: 20px;
   border-radius: 20px;
+  
 }
 .card-image {
   width: 200px;
@@ -20,11 +23,38 @@ body {
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   transition: transform 300ms, box-shadow 300ms ease-in;
-  border: 1px solid #d19a81;
+  border: 1px solid #141613;
+  background-color: black;
   
+}
+.blank-card {
+  width: 200px;
+  width: 200px;
+
 }
 .card-image:hover {
   transform: scale(110%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+.setup-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px;
+  font-size: 20px;
+}
+.start-button {
+  background-color: rgb(31, 93, 111);
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px;
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+  font-family: monospace;
+}
+
+.start-button:hover {
+  background-color: rgb(38, 106, 128) ; 
 }
