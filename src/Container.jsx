@@ -11,6 +11,8 @@ export default function Container() {
     const [clickedImages, setClickedImages] = useState([])
     const [text, setText] = useState(["Test your memory! All you have to do is click a different picture 21 times in a row. Good luck."])
     const [blankCards, setBlankCards] = useState(true)
+    const [cover, setCover] = useState()
+
 
 
     useEffect(() => {
@@ -24,6 +26,23 @@ export default function Container() {
                 const data = await response.json();
                 const dataUrls = data.results.map((result, index) => ({ ...result, id: index }));
                 setImages(dataUrls);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        }
+        fetchData();
+    }, []);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch('https://api.unsplash.com/search/photos?query=cover&per_page=1', {
+                    headers: {
+                        Authorization: "Client-ID sCtuAH1Yrq9fmA_b7FZJhLvNhSbAGgHkl589dlIRpRk"
+                    }
+                });
+                const data = await response.json();
+                const coverUrl = data.results.length > 0 ? data.results[0].urls.small : ''; 
+                setCover(coverUrl);
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }
@@ -92,7 +111,7 @@ export default function Container() {
             <div className="card-container">
             {blankCards && (
                     blankArray.map((_, index) => (
-                        <BlankCard key={index} />
+                        <BlankCard key={index} cover={cover} />
                     ))
                 )}
                 {randomImages.map(({ id, urls }) => (
