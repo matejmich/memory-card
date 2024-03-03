@@ -1,7 +1,7 @@
-export default function BlankCard( {cover}) {
+export default function BlankCard( ) {
     return(
-        <div className="card-image">
-        <img src={cover} alt="cover" className="card-image" />
+        <div className="card">
+        <img src="cover.jpg" alt="cover" className="card-image" />
 
         
         </div>

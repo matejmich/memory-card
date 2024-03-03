@@ -82,7 +82,9 @@ export default function Container() {
     function resetGame() {
         setClickedImages([])
         setCurrentScore(0)
-        
+        setStartButtonVisible(true)
+        setRandomImages([])
+        setBlankCards(true)
     }
     
     function setupStart() {
@@ -111,7 +113,7 @@ export default function Container() {
             <div className="card-container">
             {blankCards && (
                     blankArray.map((_, index) => (
-                        <BlankCard key={index} cover={cover} />
+                        <BlankCard key={index}  />
                     ))
                 )}
                 {randomImages.map(({ id, urls }) => (
